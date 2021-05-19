@@ -9,7 +9,6 @@ import uz.pdp.appnewssite.payload.LoginDto;
 import uz.pdp.appnewssite.payload.RegisterDto;
 import uz.pdp.appnewssite.service.AuthService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController

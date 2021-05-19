@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uz.pdp.appnewssite.entity.User;
 import uz.pdp.appnewssite.exceptions.ResourceNotFoundException;
 import uz.pdp.appnewssite.payload.ApiResponse;
 import uz.pdp.appnewssite.payload.LoginDto;
@@ -43,22 +44,23 @@ public class AuthService implements UserDetailsService {
 
 
     public ApiResponse register(RegisterDto registerDto){
-        throw new ResourceNotFoundException("Role","name",AppConstants.USER, "Role name not found");
-//        if (!registerDto.getPassword().equals(registerDto.getPrePassword()))
-//            return new ApiResponse("parollar mos emas",false);
-//        if (userRepository.existsByUsername(registerDto.getUsername()))
-//            return new ApiResponse("bunday username li user mavjud",false);
-//
-//        User user = new User(
-//                registerDto.getFullName(),
-//                registerDto.getUsername(),
-//                passwordEncoder.encode(registerDto.getPassword()),
-//                true,
-//                roleRepository.findByName(AppConstants.USER).orElseThrow(() ->new ResourceNotFoundException("Role","name",AppConstants.USER))
-//        );
-//
-//        userRepository.save(user);
-//        return new ApiResponse("Muvaffaqiyatli ro'yxatdan o'tdingiz",true);
+
+        if (!registerDto.getPassword().equals(registerDto.getPrePassword()))
+            return new ApiResponse("parollar mos emas",false);
+        if (userRepository.existsByUsername(registerDto.getUsername()))
+            return new ApiResponse("bunday username li user mavjud",false);
+
+        User user = new User(
+                registerDto.getFullName(),
+                registerDto.getUsername(),
+                passwordEncoder.encode(registerDto.getPassword()),
+                true,
+                roleRepository.findByName(AppConstants.USER).orElseThrow(() ->
+                        new ResourceNotFoundException("Role","name",AppConstants.USER,"role name not found"))
+        );
+
+        userRepository.save(user);
+        return new ApiResponse("Muvaffaqiyatli ro'yxatdan o'tdingiz",true);
     }
 
 
