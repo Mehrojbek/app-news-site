@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    
+
     @Bean
     public AuditorAware<Long> auditorAware(){
         return new SecurityAuditingAware();
