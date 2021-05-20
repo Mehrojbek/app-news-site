@@ -3,6 +3,7 @@ package uz.pdp.appnewssite.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -64,14 +65,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-
-
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
 
+    
+    @Bean
+    public AuditorAware<Long> auditorAware(){
+        return new SecurityAuditingAware();
+    }
 
 
 }
